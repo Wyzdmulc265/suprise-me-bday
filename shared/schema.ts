@@ -1,18 +1,23 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+export const wishes = pgTable("wishes", {
+  id: serial("id").primaryKey(),
+  content: text("content").notNull(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+export const letterQuotes = pgTable("letter_quotes", {
+  id: serial("id").primaryKey(),
+  letter: text("letter").notNull(),
+  quote: text("quote").notNull(),
 });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export const insertWishSchema = createInsertSchema(wishes).pick({ content: true });
+export const insertLetterQuoteSchema = createInsertSchema(letterQuotes).pick({ letter: true, quote: true });
+
+export type InsertWish = z.infer<typeof insertWishSchema>;
+export type Wish = typeof wishes.$inferSelect;
+
+export type InsertLetterQuote = z.infer<typeof insertLetterQuoteSchema>;
+export type LetterQuote = typeof letterQuotes.$inferSelect;

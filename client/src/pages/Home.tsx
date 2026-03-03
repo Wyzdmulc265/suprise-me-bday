@@ -44,9 +44,8 @@ export default function Home() {
         return () => clearTimeout(timer);
       }
       
-      // Total reveal time is 5 seconds. Divide by length of name.
-      // E.g., 5 letters = 1000ms per letter.
-      const intervalTime = 5000 / Math.max(cleanName.length, 1);
+      // Each letter now displays for exactly 5 seconds along with its quote.
+      const intervalTime = 5000;
       const timer = setTimeout(() => setRevealedLetters((r) => r + 1), intervalTime);
       return () => clearTimeout(timer);
     }

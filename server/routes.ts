@@ -2,8 +2,6 @@ import type { Express } from "express";
 import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
-import { db } from "./db";
-import { wishes, letterQuotes } from "@shared/schema";
 
 const seedQuotes = [
   { letter: "a", quote: "Awesome and amazing, that's you!" },
@@ -42,28 +40,11 @@ const seedWishes = [
   { content: "Count your life by smiles, not tears. Count your age by friends, not years. Happy birthday!" },
 ];
 
-async function seedDatabase() {
-  try {
-    const existingQuotes = await db.select().from(letterQuotes).limit(1);
-    if (existingQuotes.length === 0) {
-      await db.insert(letterQuotes).values(seedQuotes);
-    }
-
-    const existingWishes = await db.select().from(wishes).limit(1);
-    if (existingWishes.length === 0) {
-      await db.insert(wishes).values(seedWishes);
-    }
-  } catch (error) {
-    console.error("Failed to seed database:", error);
-  }
-}
-
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Seed the database
-  await seedDatabase();
+  // Skip DB seed for local dev (using mock storage)
 
   app.get(api.wishes.random.path, async (req, res) => {
     const wish = await storage.getRandomWish();

@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:ital,wght@0,400;0,600;0,800;0,900;1,400;1,600;1,800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Balsamiq Sans', cursive;
+  --font-body: 'Nunito', sans-serif;
+
+  /* Playful, vibrant pastel palette */
+  --background: 340 100% 97%;
+  --foreground: 320 60% 20%;
+  
+  --primary: 330 80% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 45 100% 55%;
+  --secondary-foreground: 30 90% 20%;
+  
+  --accent: 190 90% 55%;
+  --accent-foreground: 190 90% 15%;
+  
+  --muted: 340 30% 90%;
+  --muted-foreground: 320 20% 50%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 320 60% 20%;
+  
+  --border: 330 30% 85%;
+  --ring: 330 80% 60%;
+  
+  --radius: 1.5rem;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased overflow-hidden;
+    font-family: var(--font-body);
+    /* Vibrant animated gradient background */
+    background: linear-gradient(135deg, 
+      hsl(340 100% 95%), 
+      hsl(280 100% 95%), 
+      hsl(45 100% 90%),
+      hsl(190 100% 92%)
+    );
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply font-bold tracking-tight;
+  }
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Custom utility for the glassmorphism card effect */
+@layer utilities {
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-xl border-2 border-white/80 shadow-[0_8px_32px_rgba(255,100,150,0.15)] rounded-3xl;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.4);
+  }
+}
